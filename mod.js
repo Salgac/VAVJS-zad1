@@ -3,6 +3,7 @@ const PIXEL_COUNT = 11
 const PIXEL_SIZE = 42
 
 const canvas = document.createElement("canvas")
+const reset = document.createElement("button")
 const space = document.getElementById("space")
 
 //key codes
@@ -20,6 +21,32 @@ function initCanvas() {
 	//append canvas
 	canvas.width = canvas.height = PIXEL_COUNT * PIXEL_SIZE
 	space.appendChild(canvas)
+
+	//add reset button
+	reset.innerHTML = "Reset"
+	reset.addEventListener("click", resetGame)
+	document.body.appendChild(reset)
+}
+
+// function called on reset button click
+function resetGame() {
+	//stop game
+	running = false
+	for (var i = 0; i < 10; i++) {
+		window.clearInterval(i);
+	}
+
+	//remove data
+	document.removeEventListener('keydown', checkKey);
+	drawSpace();
+
+	//set original values
+	aliens = [1, 3, 5, 7, 9, 23, 25, 27, 29, 31];
+	direction = 1;
+	ship = [104, 114, 115, 116];
+	missiles = [];
+	level = 1;
+	speed = 512;
 }
 
 // checkKey function override
