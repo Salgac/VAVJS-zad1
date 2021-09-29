@@ -26,6 +26,18 @@ var musicPlaying = false
 const musicUrl = "https://www.dropbox.com/s/9y42z48bjk16g2a/Asteroids_loop.mp3?dl=1"
 var musicPlayer
 
+//images
+const shipUrl = "https://www.dropbox.com/s/wyqs469puxc7vqy/ship.png?dl=1"
+const alienUrl = "https://www.dropbox.com/s/9og7y8fargf4280/alien.png?dl=1"
+const missileUrl = "https://www.dropbox.com/s/xxn8fev3bshhchw/missile.png?dl=1"
+
+const shipImg = new Image()
+shipImg.src = shipUrl
+const alienImg = new Image()
+alienImg.src = alienUrl
+const missileImg = new Image()
+missileImg.src = missileUrl
+
 //score
 var score = 0
 const SCORE_MULTIPLIER = 10
@@ -142,19 +154,13 @@ function textBackground() {
 
 }
 
-function fillAt(backgroundColor, field) {
+function fillAt(image, field) {
 	//get coords
 	var x = field % PIXEL_COUNT
 	var y = Math.floor(field / PIXEL_COUNT)
 
-	ctx.fillStyle = backgroundColor
-	ctx.strokeStyle = "black"
-
-	//rectangle
-	ctx.beginPath()
-	ctx.rect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)
-	ctx.fill()
-	ctx.stroke()
+	//image
+	ctx.drawImage(image, x * PIXEL_SIZE, y * PIXEL_SIZE)
 }
 
 // checkCollisionsMA override
@@ -224,21 +230,21 @@ drawSpace = function () {
 // drawAliens override
 drawAliens = function () {
 	for (var i = 0; i < aliens.length; i++) {
-		fillAt("green", aliens[i])
+		fillAt(alienImg, aliens[i])
 	}
 }
 
 // drawMissiles override
 drawMissiles = function () {
 	for (var i = 0; i < missiles.length; i++) {
-		fillAt("red", missiles[i])
+		fillAt(missileImg, missiles[i])
 	}
 }
 
 // drawShit override
 drawShip = function () {
 	for (var i = 0; i < ship.length; i++) {
-		fillAt("white", ship[i])
+		fillAt(shipImg, ship[i])
 	}
 	textBackground()
 }
