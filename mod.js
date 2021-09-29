@@ -6,6 +6,7 @@ const canvas = document.createElement("canvas")
 const reset = document.createElement("button")
 const scoreInfo = document.createElement("h4")
 const levelInfo = document.createElement("h4")
+const music = document.createElement("button")
 const space = document.getElementById("space")
 
 //key codes
@@ -17,6 +18,11 @@ const KEY_SPACE = 32
 
 //debugger
 var debug = false
+
+//music
+var musicPlaying = false
+const musicUrl = "https://www.dropbox.com/s/9y42z48bjk16g2a/Asteroids_loop.mp3?dl=1"
+var musicPlayer
 
 //score
 var score = 0
@@ -34,6 +40,12 @@ function initCanvas() {
 	reset.innerHTML = "Reset"
 	reset.addEventListener("click", resetGame)
 	document.body.appendChild(reset)
+
+	//add music button
+	musicPlayer = new Audio(musicUrl)
+	music.innerHTML = "Music"
+	music.addEventListener("click", playMusic)
+	document.body.appendChild(music)
 
 	//add score and level info
 	space.appendChild(scoreInfo)
@@ -78,6 +90,19 @@ function infoUpdater() {
 		scoreInfo.innerHTML = "Score: " + score;
 		levelInfo.innerHTML = "Level: " + level;
 	}, 1000)
+}
+
+// function called on music button click
+function playMusic() {
+	if (musicPlaying) {
+		musicPlayer.pause()
+		musicPlaying = false
+		debug && console.log("Music is now turned OFF.");
+	} else {
+		musicPlayer.play()
+		musicPlaying = true
+		debug && console.log("Music is now turned ON.");
+	}
 }
 
 // checkCollisionsMA override
