@@ -20,6 +20,7 @@ var debug = false
 
 //score
 var score = 0
+const SCORE_MULTIPLIER = 10
 
 initCanvas()
 
@@ -77,6 +78,20 @@ function infoUpdater() {
 		scoreInfo.innerHTML = "Score: " + score;
 		levelInfo.innerHTML = "Level: " + level;
 	}, 1000)
+}
+
+// checkCollisionsMA override
+var checkMA = checkCollisionsMA
+checkCollisionsMA = function () {
+	//get number of aliens shot
+	var alienCount = aliens.length
+	checkMA();
+	var casualties = alienCount - aliens.length
+
+	if (casualties != 0) {
+		score += casualties * SCORE_MULTIPLIER
+		debug && console.log("Aliens shot: " + casualties);
+	}
 }
 
 // checkKey function override
