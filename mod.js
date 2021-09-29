@@ -199,6 +199,17 @@ checkKey = function (e) {
 	debug && console.log("Keyboard key pressed.");
 }
 
+// loose override
+loose = function () {
+	fillBackground("red")
+	running = false
+}
+
+// win override
+win = function () {
+	fillBackground("green")
+}
+
 // drawSpace override
 drawSpace = function () {
 	fillBackground("#202020")
