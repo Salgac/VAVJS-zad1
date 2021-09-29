@@ -37,6 +37,7 @@ function initCanvas() {
 	//append canvas
 	canvas.width = canvas.height = PIXEL_COUNT * PIXEL_SIZE
 	space.appendChild(canvas)
+	fillBackground("#202020")
 
 	//add reset button
 	reset.innerHTML = "Reset"
@@ -59,6 +60,10 @@ function initCanvas() {
 		debug = true
 		console.log("Debugging mode turned ON.")
 	}
+
+	//remove table
+	var table = document.getElementsByTagName("table")[0]
+	table.remove()
 }
 
 // function called on reset button click
@@ -121,6 +126,7 @@ function fillBackground(backgroundColor) {
 			ctx.stroke()
 		}
 	}
+	textBackground()
 }
 
 function textBackground() {
