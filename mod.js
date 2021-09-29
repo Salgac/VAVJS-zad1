@@ -13,6 +13,8 @@ const KEY_J = 74
 const KEY_L = 76
 const KEY_SPACE = 32
 
+//debugger
+var debug = false
 
 initCanvas()
 
@@ -26,6 +28,12 @@ function initCanvas() {
 	reset.innerHTML = "Reset"
 	reset.addEventListener("click", resetGame)
 	document.body.appendChild(reset)
+
+	//setup debugging
+	if (window.location.search == '?debug') {
+		debug = true
+		console.log("Debugging mode turned ON.")
+	}
 }
 
 // function called on reset button click
@@ -47,6 +55,8 @@ function resetGame() {
 	missiles = [];
 	level = 1;
 	speed = 512;
+
+	debug && console.log("Game reset.");
 }
 
 // checkKey function override
@@ -80,4 +90,5 @@ checkKey = function (e) {
 			missiles.push(ship[0] - 11);
 			break;
 	}
+	debug && console.log("Keyboard key pressed.");
 }
