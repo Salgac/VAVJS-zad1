@@ -4,6 +4,8 @@ const PIXEL_SIZE = 42
 
 const canvas = document.createElement("canvas")
 const reset = document.createElement("button")
+const scoreInfo = document.createElement("h4")
+const levelInfo = document.createElement("h4")
 const space = document.getElementById("space")
 
 //key codes
@@ -15,6 +17,9 @@ const KEY_SPACE = 32
 
 //debugger
 var debug = false
+
+//score
+var score = 0
 
 initCanvas()
 
@@ -29,6 +34,11 @@ function initCanvas() {
 	reset.addEventListener("click", resetGame)
 	document.body.appendChild(reset)
 
+	//add score and level info
+	space.appendChild(scoreInfo)
+	space.appendChild(levelInfo)
+	infoUpdater()
+
 	//setup debugging
 	if (window.location.search == '?debug') {
 		debug = true
@@ -40,9 +50,10 @@ function initCanvas() {
 function resetGame() {
 	//stop game
 	running = false
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 1000; i++) {
 		window.clearInterval(i);
 	}
+	infoUpdater();
 
 	//remove data
 	document.removeEventListener('keydown', checkKey);
@@ -55,8 +66,17 @@ function resetGame() {
 	missiles = [];
 	level = 1;
 	speed = 512;
+	score = 0;
 
 	debug && console.log("Game reset.");
+}
+
+// 
+function infoUpdater() {
+	setInterval(function () {
+		scoreInfo.innerHTML = "Score: " + score;
+		levelInfo.innerHTML = "Level: " + level;
+	}, 1000)
 }
 
 // checkKey function override
