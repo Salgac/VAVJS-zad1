@@ -3,6 +3,8 @@ const PIXEL_COUNT = 11
 const PIXEL_SIZE = 42
 
 const canvas = document.createElement("canvas")
+var ctx = canvas.getContext("2d")
+
 const reset = document.createElement("button")
 const scoreInfo = document.createElement("h4")
 const levelInfo = document.createElement("h4")
@@ -105,6 +107,50 @@ function playMusic() {
 	}
 }
 
+// draw on background function
+function fillBackground(backgroundColor) {
+	for (var i = 0; i < PIXEL_COUNT; i++) {
+		for (var j = 0; j < PIXEL_COUNT; j++) {
+			ctx.fillStyle = backgroundColor
+			ctx.strokeStyle = "black"
+
+			//rectangle
+			ctx.beginPath()
+			ctx.rect(i * PIXEL_SIZE, j * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)
+			ctx.fill()
+			ctx.stroke()
+		}
+	}
+}
+
+function textBackground() {
+	for (var i = 0; i < PIXEL_COUNT; i++) {
+		for (var j = 0; j < PIXEL_COUNT; j++) {
+			//text
+			ctx.font = "16.5px Times New Roman"
+			ctx.textAlign = "center"
+			ctx.fillStyle = "white"
+			ctx.fillText(i + j * PIXEL_COUNT, i * PIXEL_SIZE + PIXEL_SIZE / 2, j * PIXEL_SIZE + PIXEL_SIZE / 2 + 5)
+		}
+	}
+
+}
+
+function fillAt(backgroundColor, field) {
+	//get coords
+	var x = field % PIXEL_COUNT
+	var y = Math.floor(field / PIXEL_COUNT)
+
+	ctx.fillStyle = backgroundColor
+	ctx.strokeStyle = "black"
+
+	//rectangle
+	ctx.beginPath()
+	ctx.rect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)
+	ctx.fill()
+	ctx.stroke()
+}
+
 // checkCollisionsMA override
 var checkMA = checkCollisionsMA
 checkCollisionsMA = function () {
@@ -151,4 +197,31 @@ checkKey = function (e) {
 			break;
 	}
 	debug && console.log("Keyboard key pressed.");
+}
+
+// drawSpace override
+drawSpace = function () {
+	fillBackground("#202020")
+}
+
+// drawAliens override
+drawAliens = function () {
+	for (var i = 0; i < aliens.length; i++) {
+		fillAt("green", aliens[i])
+	}
+}
+
+// drawMissiles override
+drawMissiles = function () {
+	for (var i = 0; i < missiles.length; i++) {
+		fillAt("red", missiles[i])
+	}
+}
+
+// drawShit override
+drawShip = function () {
+	for (var i = 0; i < ship.length; i++) {
+		fillAt("white", ship[i])
+	}
+	textBackground()
 }
