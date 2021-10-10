@@ -38,7 +38,8 @@ alienImg.src = alienUrl
 const missileImg = new Image()
 missileImg.src = missileUrl
 
-//score
+//score and level
+var currentLevel = level;
 var score = 0
 const SCORE_MULTIPLIER = 10
 
@@ -97,6 +98,7 @@ function resetGame() {
 	ship = [104, 114, 115, 116];
 	missiles = [];
 	level = 1;
+	currentLevel = 1;
 	speed = 512;
 	score = 0;
 
@@ -107,7 +109,7 @@ function resetGame() {
 function infoUpdater() {
 	setInterval(function () {
 		scoreInfo.innerHTML = "Score: " + score;
-		levelInfo.innerHTML = "Level: " + level;
+		levelInfo.innerHTML = "Level: " + currentLevel;
 	}, 1000)
 }
 
@@ -220,6 +222,7 @@ loose = function () {
 // win override
 win = function () {
 	fillBackground("green")
+	currentLevel++;
 }
 
 // drawSpace override
